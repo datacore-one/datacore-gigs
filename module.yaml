@@ -1,0 +1,102 @@
+manifest_version: 2
+name: gigs
+version: "0.1.0"
+description: |
+  Concert radar for your Spotify library — finds artists you've actually liked
+  playing within reach of home (Slovenia, Austria, Croatia, Serbia, Italy).
+
+  Reads the library plur-buzz already syncs, sweeps Resident Advisor's regional
+  listings, and surfaces a match in the morning briefing once when it's found
+  and once when it's close enough to buy tickets for.
+
+  Tagline: "The people you listen to, playing near you."
+
+author: datacore-one
+license: MIT
+repository: https://github.com/datacore-one/datacore-gigs
+builtin: false
+
+dependencies:
+  - core@>=1.0.0
+
+provides:
+  skills:
+    - gigs        # /gigs — every upcoming match
+
+settings:
+  enabled:
+    description: "Enable the gigs module"
+    default: true
+
+  spotify_db_path:
+    description: "plur-buzz SQLite library (the module reads it; it does not sync Spotify)"
+    default: "~/Data/0-personal/2-code/plur-buzz/plur_buzz.db"
+
+  data_dir:
+    description: "Where match history lives — outside the module, per DIP-0007"
+    default: "~/Data/0-personal/.datacore/gigs"
+
+  horizon_days:
+    description: "How far ahead to look for events"
+    default: 180
+
+  imminent_days:
+    description: "Days before a show to resurface it in the briefing (ticket time)"
+    default: 18
+
+  cache_hours:
+    description: "Reuse cached RA listings for this long before refetching"
+    default: 12
+
+  min_likes:
+    description: "Ignore artists liked fewer times than this (1 = keep everything)"
+    default: 1
+
+  briefing_max:
+    description: "Most shows to list per briefing section before deferring to /gigs"
+    default: 8
+
+  keep_past_days:
+    description: "Drop matches this long after the show has passed"
+    default: 30
+
+  web_enrichment_top_n:
+    description: "Most-liked artists to spend a monthly web search on"
+    default: 40
+
+  areas:
+    description: "Resident Advisor area IDs to sweep. Country 'All' areas cover their cities."
+    default:
+      Slovenia: 142
+      Austria: 159
+      Croatia: 94
+      Serbia: 77
+      Italy (North): 171
+      Italy (Central): 52
+
+hooks:
+  today:
+    - section: gigs
+      prompt: commands/today-hook.md
+      stage: gather
+      refresh: false
+
+use_cases:
+  - "Catch a liked artist announcing a show near home"
+  - "Decide whether a weekend in Milan is worth it"
+  - "Buy tickets before a show sells out"
+
+# DIP-0022 context
+context:
+  priority: on_match
+
+engrams:
+  namespace: gigs
+  scopes: [gigs]
+
+recall:
+  scopes:
+    - module:gigs
+  tags:
+    - gigs
+    - music

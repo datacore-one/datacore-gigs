@@ -1,0 +1,8 @@
+# Machine-specific settings (paths differ per checkout)
+gigs.local.yaml
+
+# Nothing user-generated belongs in the module — match history and the
+# listings cache live under data_dir, outside this directory.
+__pycache__/
+*.pyc
+.pytest_cache/

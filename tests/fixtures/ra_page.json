@@ -1,0 +1,50 @@
+{
+ "data": {
+  "eventListings": {
+   "totalResults": 2,
+   "data": [
+    {
+     "event": {
+      "id": "1001",
+      "title": "MOAB // Example Artist",
+      "date": "2026-10-10T22:00:00.000",
+      "contentUrl": "/events/1001",
+      "venue": {
+       "name": "Example Club",
+       "area": {
+        "name": "Milan",
+        "country": {
+         "name": "Italy"
+        }
+       }
+      },
+      "artists": [
+       {
+        "id": "1",
+        "name": "Example Artist"
+       }
+      ]
+     }
+    },
+    {
+     "event": {
+      "id": "1002",
+      "title": "Night with No Lineup Listed",
+      "date": "2026-10-12T23:00:00.000",
+      "contentUrl": "/events/1002",
+      "venue": {
+       "name": "Another Venue",
+       "area": {
+        "name": "Vienna",
+        "country": {
+         "name": "Austria"
+        }
+       }
+      },
+      "artists": []
+     }
+    }
+   ]
+  }
+ }
+}
