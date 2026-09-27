@@ -100,3 +100,9 @@ recall:
   tags:
     - gigs
     - music
+
+# DIP-0047. ra.co's API is GraphQL: every call is an HTTP POST, and every one
+# gigs makes is a query that reads the event listing. Nothing is written there.
+exempt:
+  - fn: "lib/ra_client.py:_post"
+    reason: read-only — GraphQL query for ra.co event listings (POST is the transport)
