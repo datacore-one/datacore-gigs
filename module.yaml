@@ -20,6 +20,8 @@ dependencies:
   - core@>=1.0.0
 
 provides:
+  commands:
+    - today-hook
   skills:
     - gigs        # /gigs — every upcoming match
 
