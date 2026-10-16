@@ -7,9 +7,9 @@ Two tiers, deliberately unequal:
   only when an event has no structured lineup at all.
 
 The title tier exists because ~25% of RA listings carry no structured lineup
-(measured 2026-09-09: 155 of 614 events across the target region). It is
+(measured on a first sweep: 155 of 614 events). It is
 token-gated rather than substring-based because substring matching was measured
-and is unusable: on the same sweep it produced 5 near-home hits, all 5 false --
+and is unusable: on the same sweep it produced 5 hits, all 5 false --
 "Hyper" inside "HYPERTRASH", "BoomBox" inside "Badboombox", "S.N.E" inside
 "Neda Rimaite". Those three are regression tests in tests/test_matcher.py.
 """

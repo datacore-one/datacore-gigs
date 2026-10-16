@@ -47,10 +47,10 @@ within ~18 days, the ticket-buying prompt).
 ### Gigs
 
 **Newly announced**
-  2026-10-10  🇮🇹 Daniel Avery (12x) — DURO · Milan
+  2026-10-10  🇮🇹 Artist Four (12x) — Example Club · Milan
 
 **Coming up — time to get tickets**
-  2026-09-22  🇮🇹 Hania Rani (2x) — Triennale di Milano · Milan
+  2026-09-22  🇮🇹 Artist Seven (2x) — Example Hall · Milan
 ```
 
 ## Your Boundaries
@@ -63,7 +63,7 @@ within ~18 days, the ticket-buying prompt).
 - **Never surface unconfirmed (title-tier) matches.** They are filtered out
   upstream; do not reach around the tool to add them.
 - **Never editorialise about whether to go.** The like-count carries the
-  judgement. `Daniel Avery (12x)` in Milan speaks for itself.
+  judgement. `Artist Four (12x)` in Milan speaks for itself.
 - **Never pad.** One match is one line, not a paragraph.
 - **Never present cached listings as current.** If asked how fresh this is, the
   scan output names its own source.

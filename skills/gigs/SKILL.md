@@ -6,7 +6,7 @@ user-invocable: true
 
 # Gigs
 
-Artists you've actually liked, playing in Slovenia, Austria, Croatia, Serbia or Italy.
+Artists you've actually liked, playing in the areas configured in `gigs.local.yaml`.
 
 ## Current matches
 
@@ -29,28 +29,28 @@ Offer these; don't run them unprompted.
 |-----|-----|
 | "show unconfirmed too" | `python3 lib/gigs_scan.py list --include-low` |
 | "refresh" | `python3 lib/gigs_scan.py scan` (cache is 12h; this forces a look) |
-| "anything near home?" | Filter to Slovenia/Austria/Croatia/Serbia and say plainly if it's empty |
+| "anything near home?" | Filter to the `home_countries` setting and say plainly if it's empty |
 | "check the big names" | Run the web-enrichment pass below |
 
 ### Web enrichment
 
 Resident Advisor covers club and festival bookings well and misses live-music
-venues almost entirely — Kino Šiška, Arena Wien, Tvornica, Dom Omladine book
-acts that never appear in RA listings. Roughly monthly, or when the user asks
+venues almost entirely — many concert halls book acts that never appear in
+RA listings. Roughly monthly, or when the user asks
 about a specific artist:
 
 1. Take the top artists by like-count that have no upcoming RA match:
    `python3 lib/gigs_scan.py list --json` for what's already known, and
    `python3 -c "import sys;sys.path.insert(0,'lib');import config,artist_source;
    [print(a.name,a.likes) for a in artist_source.top_artists(artist_source.load_liked_artists(config.load()['spotify_db_path']),40)]"`
-2. Search each for 2026/2027 tour dates in the five countries, using the exa or
+2. Search each for upcoming tour dates in the configured countries, using the exa or
    perplexity MCP tools.
 3. Feed confirmed findings back in — **only** entries with both a real date and
    a named venue; a tour rumour is not a gig:
 
 ```bash
 echo '[{"title":"Artist at Venue","date":"2026-11-14","contentUrl":"https://...",
-  "venue":{"name":"Kino Šiška","area":{"name":"Ljubljana","country":{"name":"Slovenia"}}},
+  "venue":{"name":"Example Hall","area":{"name":"Berlin","country":{"name":"Germany"}}},
   "artists":[{"id":"w1","name":"Artist Name"}]}]' \
   | python3 lib/gigs_scan.py ingest-web
 ```

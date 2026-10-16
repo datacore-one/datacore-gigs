@@ -1,7 +1,7 @@
 # gigs
 
 Concert radar for your Spotify library. Finds artists you've actually liked
-playing in Slovenia, Austria, Croatia, Serbia and Italy.
+playing in the regions you configure.
 
 ```
 $ /gigs
@@ -15,8 +15,8 @@ $ /gigs
 
 ## How it works
 
-1. **Artists** come from the library `plur-buzz` already syncs — this module
-   never touches Spotify itself.
+1. **Artists** come from a liked-tracks library another tool already syncs —
+   this module never touches Spotify itself.
 2. **Events** come from one Resident Advisor sweep per region, returning full
    lineups, so ~950 artists match against ~600 events in a handful of requests.
 3. **Matches** land in the morning briefing once when found, and once more when
@@ -24,28 +24,28 @@ $ /gigs
 
 ## Setup
 
-Nothing, if plur-buzz lives at its default path. Otherwise create
-`gigs.local.yaml` (gitignored):
+Copy `gigs.local.yaml.example` to `gigs.local.yaml` (gitignored) and set:
 
 ```yaml
-spotify_db_path: /path/to/plur_buzz.db
+spotify_db_path: /path/to/library.db   # SQLite, table `tracks` with an `artist` column
+areas: {Country Name: <RA area id>}    # Resident Advisor areas to sweep
+home_countries: [Country Name]
 ```
 
-To keep the library current, run plur-buzz's likes sync — this module reads,
+To keep the library current, run your Spotify likes sync — this module reads,
 it does not fetch.
 
 ## Coverage, honestly
 
 Resident Advisor is excellent on clubs and festivals and thin on live-music
-venues. On the first full sweep that meant 21 matches, **all in Italy, none
-near home** — Vienna listed 143 events and matched none of them, because those
-are local residents rather than touring acts.
+venues. A first full sweep can return all its matches from one country and
+none near home, because nearby listings are local residents rather than
+touring acts.
 
 The `/gigs` skill includes a web-enrichment pass over your most-liked artists
-to catch Kino Šiška / Arena Wien / Tvornica bookings that RA never lists. If
-the home region stays empty over a few months, the real fix is regional
-ticketing adapters (Eventim.si, Entrio.hr, oeticket.at) — deliberately deferred
-as too maintenance-heavy to build on speculation.
+to catch concert-hall bookings that RA never lists. If the home region stays
+empty over a few months, the real fix is regional ticketing adapters —
+deliberately deferred as too maintenance-heavy to build on speculation.
 
 ## Settings
 

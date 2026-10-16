@@ -42,11 +42,11 @@ def test_briefing_is_silent_when_nothing_qualifies(sandbox, capsys) -> None:
 
 def test_missing_library_exits_nonzero_with_guidance(sandbox, capsys, monkeypatch) -> None:
     monkeypatch.setattr(
-        gigs_scan.config, "load", lambda: {"spotify_db_path": "/nowhere/plur_buzz.db"}
+        gigs_scan.config, "load", lambda: {"spotify_db_path": "/nowhere/library.db"}
     )
     assert gigs_scan.main(["scan"]) == 2
     err = capsys.readouterr().err
-    assert "not found" in err and "plur-buzz" in err, "error must say how to fix it"
+    assert "not found" in err and "spotify_db_path" in err, "error must say how to fix it"
 
 
 def test_ingest_web_rejects_entries_without_date_or_venue(sandbox, capsys, monkeypatch) -> None:
@@ -58,8 +58,8 @@ def test_ingest_web_rejects_entries_without_date_or_venue(sandbox, capsys, monke
         type("S", (), {"read": staticmethod(lambda: json.dumps([
             {"title": "Rumoured tour", "artists": [{"id": "w", "name": "Moderat"}]},
             {"title": "Moderat live", "date": "2026-11-14",
-             "venue": {"name": "Kino Šiška",
-                       "area": {"name": "Ljubljana", "country": {"name": "Slovenia"}}},
+             "venue": {"name": "Example Hall",
+                       "area": {"name": "Berlin", "country": {"name": "Germany"}}},
              "artists": [{"id": "w2", "name": "Moderat"}]},
         ]))})(),
     )

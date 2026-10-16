@@ -24,8 +24,12 @@ from gigs_store import GigsStore  # noqa: E402
 from matcher import Match, match_events  # noqa: E402
 
 FLAGS = {
-    "Slovenia": "🇸🇮", "Austria": "🇦🇹", "Croatia": "🇭🇷",
-    "Serbia": "🇷🇸", "Italy": "🇮🇹",
+    "Austria": "🇦🇹", "Belgium": "🇧🇪", "Croatia": "🇭🇷", "Czech Republic": "🇨🇿",
+    "Denmark": "🇩🇰", "France": "🇫🇷", "Germany": "🇩🇪", "Hungary": "🇭🇺",
+    "Ireland": "🇮🇪", "Italy": "🇮🇹", "Netherlands": "🇳🇱", "Poland": "🇵🇱",
+    "Portugal": "🇵🇹", "Serbia": "🇷🇸", "Slovenia": "🇸🇮", "Spain": "🇪🇸",
+    "Sweden": "🇸🇪", "Switzerland": "🇨🇭", "United Kingdom": "🇬🇧",
+    "United States": "🇺🇸",
 }
 
 
@@ -72,10 +76,13 @@ def _areas(cfg: dict) -> dict[str, int]:
 
 
 def _artists(cfg: dict):
-    return load_liked_artists(
-        cfg.get("spotify_db_path") or "~/Data/0-personal/2-code/plur-buzz/plur_buzz.db",
-        min_likes=int(cfg.get("min_likes") or 1),
-    )
+    db = cfg.get("spotify_db_path")
+    if not db:
+        raise LibraryUnavailable(
+            "Spotify library not found: spotify_db_path is not set.\n"
+            "Fix: set spotify_db_path in gigs.local.yaml to your liked-tracks SQLite DB."
+        )
+    return load_liked_artists(db, min_likes=int(cfg.get("min_likes") or 1))
 
 
 def cmd_scan(args, cfg: dict) -> int:
@@ -84,6 +91,12 @@ def cmd_scan(args, cfg: dict) -> int:
         artists = _artists(cfg)
     except LibraryUnavailable as exc:
         print(f"error: {exc}", file=sys.stderr)
+        return 2
+
+    if not _areas(cfg):
+        print("error: no Resident Advisor areas configured.\n"
+              "Fix: set `areas` (label -> RA area id) in gigs.local.yaml; "
+              "see gigs.local.yaml.example.", file=sys.stderr)
         return 2
 
     cached, fetched_at = ra_client.load_cache(data_dir)

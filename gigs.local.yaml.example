@@ -1,0 +1,13 @@
+# Copy to gigs.local.yaml (gitignored) and fill in your own values.
+
+# SQLite DB of liked tracks (table `tracks` with an `artist` column), kept
+# current by whatever tool syncs your Spotify likes.
+spotify_db_path: "~/path/to/library.db"
+
+# Resident Advisor areas to sweep: label -> RA area id. Country-level "All"
+# areas cover their cities. Find ids with RA's countries/areas listing.
+areas: {}
+#   Country Name: <RA area id>
+
+# Countries that count as "near home" when you ask.
+home_countries: [Germany]

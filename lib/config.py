@@ -2,7 +2,7 @@
 
 Defaults live in module.yaml so the manifest stays the single description of
 what the module can be tuned to do. Machine-specific values -- above all the
-path to the plur-buzz library, which differs per checkout -- go in
+path to the liked-tracks library and the region to sweep -- go in
 ``gigs.local.yaml`` beside it, which is gitignored.
 """
 from __future__ import annotations

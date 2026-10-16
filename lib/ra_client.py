@@ -9,9 +9,9 @@ is treated throughout as something that will break: failures surface loudly and
 fall back to cache, and cached data is never presented as fresh. The HTML site
 sits behind Cloudflare (403); the GraphQL endpoint does not.
 
-Area IDs verified 2026-09-09 against the countries query. Country-level "All"
-areas were measured to cover their cities (city-only events: SI 0, AT 1, HR 0,
-RS 0), so the city areas are deliberately not queried.
+Area IDs come from the installation's settings (``areas``). Country-level
+"All" areas were measured to cover their cities, so city areas need not be
+queried separately.
 """
 from __future__ import annotations
 
@@ -29,14 +29,8 @@ USER_AGENT = (
 )
 
 # label -> RA area id
-DEFAULT_AREAS: dict[str, int] = {
-    "Slovenia": 142,
-    "Austria": 159,
-    "Croatia": 94,
-    "Serbia": 77,
-    "Italy (North)": 171,
-    "Italy (Central)": 52,
-}
+# No built-in region: set ``areas`` in gigs.local.yaml.
+DEFAULT_AREAS: dict[str, int] = {}
 
 _QUERY = """
 query($filters: FilterInputDtoInput, $pageSize: Int, $page: Int) {

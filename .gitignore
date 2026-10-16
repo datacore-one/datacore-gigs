@@ -6,3 +6,6 @@ gigs.local.yaml
 __pycache__/
 *.pyc
 .pytest_cache/
+
+# Layered context (DIP-0002): the composed file is generated
+CLAUDE.md

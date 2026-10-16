@@ -3,9 +3,9 @@ name: gigs
 version: "0.1.0"
 description: |
   Concert radar for your Spotify library — finds artists you've actually liked
-  playing within reach of home (Slovenia, Austria, Croatia, Serbia, Italy).
+  playing within reach of home (the Resident Advisor areas you configure).
 
-  Reads the library plur-buzz already syncs, sweeps Resident Advisor's regional
+  Reads a Spotify library another tool already syncs, sweeps Resident Advisor's regional
   listings, and surfaces a match in the morning briefing once when it's found
   and once when it's close enough to buy tickets for.
 
@@ -31,8 +31,8 @@ settings:
     default: true
 
   spotify_db_path:
-    description: "plur-buzz SQLite library (the module reads it; it does not sync Spotify)"
-    default: "~/Data/0-personal/2-code/plur-buzz/plur_buzz.db"
+    description: "SQLite library of liked tracks (table `tracks` with an `artist` column). The module reads it; it does not sync Spotify. Set it in gigs.local.yaml."
+    default: ""
 
   data_dir:
     description: "Where match history lives — outside the module, per DIP-0007"
@@ -67,14 +67,12 @@ settings:
     default: 40
 
   areas:
-    description: "Resident Advisor area IDs to sweep. Country 'All' areas cover their cities."
-    default:
-      Slovenia: 142
-      Austria: 159
-      Croatia: 94
-      Serbia: 77
-      Italy (North): 171
-      Italy (Central): 52
+    description: "Resident Advisor area IDs to sweep, label -> id. Country 'All' areas cover their cities. Set yours in gigs.local.yaml (see gigs.local.yaml.example)."
+    default: {}
+
+  home_countries:
+    description: "Countries that count as 'near home' when the user asks"
+    default: []
 
 hooks:
   today:
@@ -85,7 +83,7 @@ hooks:
 
 use_cases:
   - "Catch a liked artist announcing a show near home"
-  - "Decide whether a weekend in Milan is worth it"
+  - "Decide whether a weekend trip to a show is worth it"
   - "Buy tickets before a show sells out"
 
 # DIP-0022 context

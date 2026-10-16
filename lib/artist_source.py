@@ -1,12 +1,12 @@
-"""Liked artists, read from the library plur-buzz already maintains.
+"""Liked artists, read from a library another tool already maintains.
 
-This module deliberately does NOT talk to Spotify. plur-buzz
-(0-personal/2-code/plur-buzz) already holds an OAuth token with
-``user-library-read`` and syncs Liked Songs into its SQLite DB. A second
-integration would mean a second consent flow and a second token cache to
-drift out of date, to obtain data that is already on disk.
+This module deliberately does NOT talk to Spotify. A separate sync tool holds
+an OAuth token with ``user-library-read`` and writes Liked Songs into a SQLite
+DB (table ``tracks``, column ``artist``). A second integration would mean a
+second consent flow and a second token cache to drift out of date, to obtain
+data that is already on disk.
 
-Refreshing the library is plur-buzz's job: ``sync_likes_to_db()``.
+Refreshing the library is that sync tool's job.
 """
 from __future__ import annotations
 
@@ -38,10 +38,10 @@ def load_liked_artists(db_path: str | Path, min_likes: int = 1) -> list[LikedArt
     if not path.exists():
         raise LibraryUnavailable(
             f"Spotify library not found at {path}.\n"
-            "The gigs module reads the library plur-buzz maintains; it does not "
-            "sync Spotify itself.\n"
-            "Fix: run plur-buzz's likes sync, or set spotify_db_path in "
-            "gigs.local.yaml if your checkout is elsewhere."
+            "The gigs module reads a liked-tracks library another tool "
+            "maintains; it does not sync Spotify itself.\n"
+            "Fix: run your library's likes sync, or set spotify_db_path in "
+            "gigs.local.yaml."
         )
 
     try:
